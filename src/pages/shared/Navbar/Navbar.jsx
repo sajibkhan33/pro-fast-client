@@ -11,8 +11,19 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
+        <NavLink to="/sendParcel">Send A Parcel</NavLink>
+      </li>
+      <li>
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
+
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </>
+      )}
       <li>
         <NavLink to="/about">About Us</NavLink>
       </li>
@@ -56,11 +67,11 @@ const Navbar = () => {
       <div className="navbar-end">
         {/* ✅ Conditional buttons */}
         {user ? (
-          <button onClick={logOut} className="btn">
+          <button onClick={logOut} className="btn btn-primary text-black">
             Logout
           </button>
         ) : (
-          <Link className="btn" to="/login">
+          <Link className="btn btn-primary text-black" to="/login">
             Login
           </Link>
         )}
