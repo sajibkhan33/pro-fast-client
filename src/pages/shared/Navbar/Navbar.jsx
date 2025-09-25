@@ -5,6 +5,15 @@ import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const navItems = (
     <>
       <li>
@@ -24,6 +33,7 @@ const Navbar = () => {
           </li>
         </>
       )}
+
       <li>
         <NavLink to="/about">About Us</NavLink>
       </li>
@@ -65,13 +75,12 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        {/* ✅ Conditional buttons */}
         {user ? (
-          <button onClick={logOut} className="btn btn-primary text-black">
-            Logout
+          <button onClick={handleLogOut} className="btn btn-primary text-black">
+            Log Out
           </button>
         ) : (
-          <Link className="btn btn-primary text-black" to="/login">
+          <Link to="/login" className="btn btn-primary  text-black">
             Login
           </Link>
         )}
