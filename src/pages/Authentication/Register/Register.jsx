@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import axios from "axios";
 import useAxios from "../../../hooks/useAxios";
@@ -15,6 +15,9 @@ const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const [profilePic, setProfilePic] = useState("");
   const axiosInstance = useAxios();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || "/";
 
   const onSubmit = (data) => {
     console.log(data);
@@ -42,6 +45,7 @@ const Register = () => {
         updateUserProfile(userProfile)
           .then(() => {
             console.log("profile name pic updated");
+            navigate(from);
           })
           .catch((error) => {
             console.log(error);
@@ -66,6 +70,7 @@ const Register = () => {
 
     setProfilePic(res.data.data.url);
   };
+
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
@@ -78,18 +83,18 @@ const Register = () => {
               type="text"
               {...register("name", { required: true })}
               className="input"
-              placeholder="Name"
+              placeholder="Your Name"
             />
-            {errors.name?.type === "required" && (
+            {errors.email?.type === "required" && (
               <p className="text-red-500">Name is required</p>
             )}
-            {/* Image */}
-            <label className="label">Your Profile Picture</label>
+            {/* name field */}
+            <label className="label">Your Name</label>
             <input
               type="file"
               onChange={handleImageUpload}
               className="input"
-              placeholder="Your Profile Picture"
+              placeholder="Your Profile picture"
             />
 
             {/* email field */}
@@ -103,7 +108,7 @@ const Register = () => {
             {errors.email?.type === "required" && (
               <p className="text-red-500">Email is required</p>
             )}
-            {/* Passaword field */}
+            {/* password field*/}
             <label className="label">Password</label>
             <input
               type="password"
